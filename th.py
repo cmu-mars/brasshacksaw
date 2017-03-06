@@ -9,14 +9,14 @@ else:
     num = sys.argv[1]
 
 app = Flask(__name__)
-BASE = "/home/vagrant/tests/out/" + sys.argv[1]
+BASE = "/home/vagrant/tests/out/" + num
 F = open(BASE + '/th.log', 'w')
 
 @app.route("/ready", methods=["POST"])
 def ready():
     req = request.get_json(silent=True)
     F.write(str(req))
-    lock = open(BASE + "thlock", 'w')
+    lock = open(BASE + "/thlock", 'w')
     lock.close()
 
 @app.route("/error", methods=["POST"])
