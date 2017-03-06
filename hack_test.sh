@@ -19,8 +19,7 @@ BASE="$HOME/tests/"
 IN_BASE="$BASE/in/$1"
 OUT_BASE="$BASE/out/$1"
 
-# assume that this is empty
-sudo mkdir -p /test
+# assume that /test is empty
 
 # launch python module that implements the end points in a very naive way
 # and just dumps things to a file. keep track of its PID so you can kill it
@@ -53,10 +52,14 @@ do
 done
 
 # maybe wait and perturb (just call a script in the dir?)
+$IN_BASE/perturb.sh &
 
 # after timeout, ignoring done early?, kill everything aggressively
 kill -9 $TH_PID
 
 # move /test wholesale to ~/tests/out/##/test
+mv "/test" "$OUT_BASE/"
 
 # remake /test
+sudo mkdir -p /test
+sudo chown vagrant /test
