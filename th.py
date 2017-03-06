@@ -1,15 +1,8 @@
 import sys
 from flask import Flask, request
 
-## zero extend
-num = 0
-if sys.argv[1] < 10:
-    num = "0%s" % sys.argv[1]
-else:
-    num = sys.argv[1]
-
 app = Flask(__name__)
-BASE = "/home/vagrant/tests/out/" + num
+BASE = "/home/vagrant/tests/out/" + (sys.argv[1].zfill(3))
 F = open(BASE + '/th.log', 'w')
 
 @app.route("/ready", methods=["POST"])
@@ -35,4 +28,4 @@ def done():
     F.write(str(req))
 
 if __name__ == "__main__":
-    app.run("0.0.0.0") ## probably wrong, it'll clash with
+    app.run(host="0.0.0.0", port=5001)
