@@ -15,14 +15,24 @@ then
 fi
 
 # we assume that ~/tests/in/arg0 exists; check this later maybe
+BASE="$HOME/tests/"
+IN_BASE="$BASE/in/$1"
+OUT_BASE="$BASE/out/$1"
+
+# assume that this is empty
+sudo mkdir -p /test
 
 # launch python module that implements the end points in a very naive way
 # and just dumps things to a file. keep track of its PID so you can kill it
 # later.
+python th.py $1 &
+TH_PID=$!
 
 # copy in config file for the test number
+cp "$IN_BASE/config.json" "/test/data"
 
 # run start.sh with a timeout and redirect to a log
+timeout 600 "$HOME/start.sh" &> "$OUT_BASE/start.sh.log" &
 
 # wait for das ready
 
@@ -31,6 +41,7 @@ fi
 # maybe wait and perturb (just call a script in the dir?)
 
 # after timeout, ignoring done early?, kill everything aggressively
+kill -9 $TH_PID
 
 # move /test wholesale to ~/tests/out/##/test
 
