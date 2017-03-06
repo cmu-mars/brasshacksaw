@@ -1,4 +1,5 @@
 from flask import Flask
+import sys
 
 BASE="/home/vagrant/tests/out/" + sys.argv[0]
 file = open(BASE + '/th.log', 'w')
