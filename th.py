@@ -1,8 +1,15 @@
 import sys
 from flask import Flask, request
 
+## zero extend
+num = 0
+if sys.argv[1] < 10:
+    num = "0%s" % sys.argv[1]
+else:
+    num = sys.argv[1]
+
 app = Flask(__name__)
-BASE = "/home/vagrant/tests/out/" + sys.argv[0]
+BASE = "/home/vagrant/tests/out/" + sys.argv[1]
 F = open(BASE + '/th.log', 'w')
 
 @app.route("/ready", methods=["POST"])
