@@ -34,9 +34,23 @@ cp "$IN_BASE/config.json" "/test/data"
 # run start.sh with a timeout and redirect to a log
 timeout 600 "$HOME/start.sh" &> "$OUT_BASE/start.sh.log" &
 
+## timeout isn't probably going to be good enough here because we know that
+## this stuff needs to get kill -9'ed because it's badly behaved, and it
+## doesn't let us kill the th at the same time
+
 # wait for das ready
+while [ ! -f "$OUTBASE/thlock" ] ;
+do
+    sleep 1.0
+done
+rm "$OUTBASE/thlock"
 
 # poll observe at some rate and redirect to a log
+while true ; ## hook this with timeout somehow
+do
+    curl localhost:8080/action/observe >> "$OUTBASE/observe.log"
+    sleep 0.01
+done
 
 # maybe wait and perturb (just call a script in the dir?)
 

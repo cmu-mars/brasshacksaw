@@ -7,6 +7,8 @@ file = open(BASE + '/th.log', 'w')
 def ready():
     req = request.get_json(silent=True)
     file.write(str(req))
+    lock = open(BASE + "thlock", 'w')
+    lock.close()
 
 @app.route("/error", methods=["POST"])
 def error():
