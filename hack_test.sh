@@ -24,6 +24,7 @@ OUT_BASE="$BASE/out/$1"
 # launch python module that implements the end points in a very naive way
 # and just dumps things to a file. keep track of its PID so you can kill it
 # later.
+mkdir -p "$OUT_BASE"
 python th.py $1 &
 TH_PID=$!
 
@@ -47,7 +48,7 @@ rm "$OUTBASE/thlock"
 # poll observe at some rate and redirect to a log
 while true ; ## hook this with timeout somehow
 do
-    curl localhost:8080/action/observe >> "$OUTBASE/observe.log"
+    curl localhost:5000/action/observe >> "$OUTBASE/observe.log"
     sleep 0.01
 done
 
