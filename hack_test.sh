@@ -19,7 +19,10 @@ BASE="$HOME/tests/"
 IN_BASE="$BASE/in/$1"
 OUT_BASE="$BASE/out/$1"
 
-# assume that /test is empty
+# assume that /test is empty or nothing in there matters
+sudo rm -rf /test
+sudo mkdir -p /test
+sudo chown vagrant /test
 
 # launch python module that implements the end points in a very naive way
 # and just dumps things to a file. keep track of its PID so you can kill it
